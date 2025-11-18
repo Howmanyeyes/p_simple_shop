@@ -1,0 +1,20 @@
+services:
+  p_simple_shop:
+    container_name:
+      p_simple_shop
+    build:
+      context: 
+        .
+      dockerfile: 
+        Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "4225:4225"
+    networks:
+      - backend
+
+networks:
+  backend:
+    
+

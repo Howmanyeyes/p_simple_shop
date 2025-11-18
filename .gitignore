@@ -1,0 +1,3 @@
+.p_simple_shop_venv
+.env
+*.pyc
