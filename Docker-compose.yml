@@ -13,8 +13,27 @@ services:
       - "4225:4225"
     networks:
       - backend
+  
+  db:
+    container_name:
+      postgres
+    image: 
+      postgres:16
+    restart:
+      always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - backend
+    volumes:
+      - pg_volume:/pg_volume/db_here
 
 networks:
   backend:
     
-
+volumes:
+  pg_volume:
