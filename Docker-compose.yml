@@ -44,12 +44,10 @@ services:
         .
       dockerfile:
         Dockerfile
-      command:
-        alembic upgrade head
-    depends_on:
-      - db
     command:
       alembic upgrade head
+    depends_on:
+      - db
     restart:
       "no"
     networks:

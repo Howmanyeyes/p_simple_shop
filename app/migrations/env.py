@@ -5,5 +5,4 @@ import dotenv
 from app.models import Base
 
 dotenv.load_dotenv()
-name = os.getenv("POSTGRES_USER", "KYS")
-
+postgres_user = os.getenv("POSTGRES_USER", "postgres")
