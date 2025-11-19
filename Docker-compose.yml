@@ -1,5 +1,5 @@
 services:
-  p_simple_shop:
+  app:
     container_name:
       p_simple_shop
     build:
@@ -7,12 +7,16 @@ services:
         .
       dockerfile: 
         Dockerfile
+    command:
+      uvicorn app.main:app --reload --host 0.0.0.0 --port ${APP_PORT}
     env_file:
       - .env
     ports:
-      - "4225:4225"
+      - ${APP_PORT}:${APP_PORT}
     networks:
       - backend
+    depends_on:
+      - migration
   
   db:
     container_name:
@@ -20,7 +24,7 @@ services:
     image: 
       postgres:16
     restart:
-      always
+      "always"
     env_file:
       - .env
     environment:
@@ -30,10 +34,29 @@ services:
     networks:
       - backend
     volumes:
-      - pg_volume:/pg_volume/db_here
+      - ${POSTGRES_VOLUME}:/pg_volume/db_here
+
+  migration:
+    container_name:
+      migration
+    build:
+      context:
+        .
+      dockerfile:
+        Dockerfile
+      command:
+        alembic upgrade head
+    depends_on:
+      - db
+    command:
+      alembic upgrade head
+    restart:
+      "no"
+    networks:
+      - backend
 
 networks:
   backend:
     
 volumes:
-  pg_volume:
+  ${POSTGRES_VOLUME}:
