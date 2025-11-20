@@ -34,7 +34,7 @@ services:
     networks:
       - backend
     volumes:
-      - ${POSTGRES_VOLUME}:/pg_volume/db_here
+      - pg_volume:/pg_volume/db_here
 
   migration:
     container_name:
@@ -45,16 +45,20 @@ services:
       dockerfile:
         Dockerfile
     command:
-      alembic upgrade head
+      python -m alembic upgrade head
+    env_file:
+      - .env
     depends_on:
       - db
     restart:
       "no"
     networks:
       - backend
+    volumes:
+      - ./app/:/p_simple_shop/app/
 
 networks:
   backend:
     
 volumes:
-  ${POSTGRES_VOLUME}:
+  pg_volume:

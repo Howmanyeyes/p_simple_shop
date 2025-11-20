@@ -4,3 +4,4 @@ sqlalchemy
 uuid6
 alembic
 python-dotenv
+psycopg2-binary

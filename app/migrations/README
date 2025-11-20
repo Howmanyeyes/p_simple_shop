@@ -1,0 +1,6 @@
+Generic single-database configuration.
+
+to migrate:
+0) docker compose run --rm migration python -m alembic init app/migrations     
+1) docker compose run --rm migration python -m alembic revision --autogenerate -m "message here"
+2) docker compose up --build
